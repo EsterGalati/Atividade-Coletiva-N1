@@ -4,20 +4,20 @@ public class Quarto {
     private int numero;
     private boolean preenchido;
     private boolean Higienizado;
-    private boolean Cartoes_Rfid;
+    private boolean CartoesRfid;
 
     public Quarto(int numero) {
         this.numero = numero;
         this.preenchido = false;
         this.Higienizado = true;
-        this.Cartoes_Rfid = true;
+        this.CartoesRfid = true;
     }
 
-    public synchronized boolean acomodar_se(Hospede hospede) {
-        if (!preenchido && Higienizado && Cartoes_Rfid) {
+    public synchronized boolean acomodarSe(Hospede hospede) {
+        if (!preenchido && Higienizado && CartoesRfid) {
             preenchido = true;
             Higienizado = false; 
-            Cartoes_Rfid = false; 
+            CartoesRfid = false; 
             System.out.println("Hospede " + hospede.getId() + " entrou no quarto " + numero);
             return true;
         }
@@ -28,12 +28,12 @@ public class Quarto {
     public synchronized void sair() {
         preenchido = false;
         Higienizado = false; 
-        Cartoes_Rfid = true; 
+        CartoesRfid = true; 
         System.out.println("Quarto " + numero + " esta sem hospede e precisa ser higienizado.");
     }
 
     public synchronized void Higienizar() {
-        if (!preenchido && Cartoes_Rfid && !Higienizado) {
+        if (!preenchido && CartoesRfid && !Higienizado) {
             Higienizado = true;
             System.out.println("Quarto " + numero + " foi higienizado.");
         }
@@ -48,7 +48,7 @@ public class Quarto {
     }
 
     public boolean isChaveNaRecepcao() {
-        return Cartoes_Rfid;
+        return CartoesRfid;
     }
 
     public int getNumero() {

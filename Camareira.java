@@ -1,14 +1,14 @@
 public class Camareira implements Runnable {
-    private Hotel Pousada_dos_Suspiros;
+    private Hotel PousadaDosSuspiros;
 
-    public Camareira(Hotel Pousada_dos_Suspiros) {
-        this.Pousada_dos_Suspiros = Pousada_dos_Suspiros;
+    public Camareira(Hotel PousadaDosSuspiros) {
+        this.PousadaDosSuspiros = PousadaDosSuspiros;
     }
 
 
     public void run() {
         while (true) {
-            Pousada_dos_Suspiros.Purificarquarto();
+            PousadaDosSuspiros.PurificarQuarto();
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {

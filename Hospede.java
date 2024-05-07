@@ -2,22 +2,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hospede implements Runnable {
-    private static int rastrear_identificador = 1; 
+    private static int rastrearIdentificador = 1; 
     private final int Identificador;
-    private final Hotel Pousada_dos_Suspiros;
+    private final Hotel PousadaDosSuspiros;
     private final int groupSize; 
     private int attempts = 0; 
-    private List<Integer> qtd_Quartos_Alocados; 
+    private List<Integer> qtdQuartosAlocados; 
 
-    private static synchronized int getRastrear_identificador() {
-        return rastrear_identificador++;
+    private static synchronized int getrastrearIdentificador() {
+        return rastrearIdentificador++;
     }
 
-    public Hospede(Hotel Pousada_dos_Suspiros, int groupSize) {
-        this.Pousada_dos_Suspiros = Pousada_dos_Suspiros;
+    public Hospede(Hotel PousadaDosSuspiros, int groupSize) {
+        this.PousadaDosSuspiros = PousadaDosSuspiros;
         this.groupSize = groupSize;
-        this.Identificador = getRastrear_identificador(); 
-        this.qtd_Quartos_Alocados = new ArrayList<>(); 
+        this.Identificador = getrastrearIdentificador(); 
+        this.qtdQuartosAlocados = new ArrayList<>(); 
     }
 
 
@@ -27,17 +27,17 @@ public class Hospede implements Runnable {
 
     
     public void run() {
-        int solicitacao_Quarto = (groupSize + 3) / 4; 
-        int Quartos_Alocados = 0;
+        int solicitacaoQuarto = (groupSize + 3) / 4; 
+        int quartosAlocados = 0;
 
-        while (Quartos_Alocados < solicitacao_Quarto && attempts < 2) {
-            int bookedRoom = Pousada_dos_Suspiros.tentarReservar(this);
+        while (quartosAlocados < solicitacaoQuarto && attempts < 2) {
+            int bookedRoom = PousadaDosSuspiros.tentarReservar(this);
             if (bookedRoom > 0) {
-                Quartos_Alocados++;
-                qtd_Quartos_Alocados.add(bookedRoom); 
+                quartosAlocados++;
+                qtdQuartosAlocados.add(bookedRoom); 
                 System.out.println("Hospede " + Identificador + " entrou e reservou quarto numero " + bookedRoom
-                        + ". Total reservado: " + Quartos_Alocados);
-                if (Quartos_Alocados == solicitacao_Quarto) {
+                        + ". Total reservado: " + quartosAlocados);
+                if (quartosAlocados == solicitacaoQuarto) {
                     System.out.println("Hospede " + Identificador + " reservou todos os quartos necessarios.");
                     simulateStay(); 
                 }
@@ -64,7 +64,7 @@ public class Hospede implements Runnable {
         try {
             int stayDuration = 5000; 
             Thread.sleep(stayDuration);
-            qtd_Quartos_Alocados.forEach(qtd_Quartos -> Pousada_dos_Suspiros.checkOut(qtd_Quartos)); 
+            qtdQuartosAlocados.forEach(qtdQuartos -> PousadaDosSuspiros.checkOut(qtdQuartos)); 
         } catch (InterruptedException e) {
             System.out.println("Hospede " + Identificador + " foi interrompido durante sua estadia e vai embora mais cedo.");
         }
